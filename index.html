@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>반응속도 측정</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="screen" class="screen blue">
+    <div id="message">클릭하여 시작</div>
+
+    <div id="result-panel" class="hidden">
+      <p id="ms-display"></p>
+      <form id="save-form" autocomplete="off">
+        <input id="nickname" name="nickname" maxlength="12" placeholder="닉네임 (최대 12자)" required />
+        <button type="submit" id="save-btn">기록 저장</button>
+      </form>
+      <p id="save-status"></p>
+      <button type="button" id="retry-btn">다시하기</button>
+
+      <div id="ranking">
+        <h2>최고 기록 TOP 10</h2>
+        <ol id="ranking-list"></ol>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

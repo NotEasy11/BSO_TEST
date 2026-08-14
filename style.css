@@ -1,0 +1,117 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+}
+
+.screen {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.1s ease;
+  text-align: center;
+  padding: 1rem;
+}
+
+.screen.blue {
+  background-color: #1e5cff;
+}
+
+.screen.red {
+  background-color: #ff2d2d;
+}
+
+.screen.green {
+  background-color: #2ecc71;
+  cursor: default;
+}
+
+#message {
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  color: #fff;
+  font-weight: 700;
+}
+
+.hidden {
+  display: none !important;
+}
+
+#result-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  background: rgba(255, 255, 255, 0.9);
+  color: #222;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 90vw;
+  width: 360px;
+}
+
+#ms-display {
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
+#save-form {
+  display: flex;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+#nickname {
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+#save-btn, #retry-btn {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  border: none;
+  border-radius: 0.5rem;
+  background-color: #2ecc71;
+  color: #fff;
+  cursor: pointer;
+}
+
+#retry-btn {
+  background-color: #1e5cff;
+}
+
+#save-status {
+  margin: 0;
+  font-size: 0.9rem;
+  min-height: 1.2em;
+}
+
+#ranking {
+  width: 100%;
+}
+
+#ranking h2 {
+  font-size: 1.1rem;
+  margin: 0 0 0.5rem 0;
+}
+
+#ranking-list {
+  text-align: left;
+  padding-left: 1.2rem;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+}
