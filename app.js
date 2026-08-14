@@ -1,4 +1,21 @@
-import { saveScore, getTop } from "./firebase.js";
+// firebase.js는 외부 CDN을 불러오므로, 정적 import로 연결하면 네트워크 문제 시
+// 게임 로직 전체가 실행되지 않는다. 필요한 시점에만 동적으로 불러와 격리한다.
+const FIREBASE_TIMEOUT_MS = 8000;
+let firebaseModulePromise = null;
+function loadFirebase() {
+  if (!firebaseModulePromise) {
+    firebaseModulePromise = import("./firebase.js");
+  }
+  return withTimeout(firebaseModulePromise, FIREBASE_TIMEOUT_MS);
+}
+
+// CDN 응답이 없을 때(느린 네트워크, 광고 차단기 등) 화면이 무한 대기 상태에 빠지지 않도록 한다.
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error("timeout")), ms)),
+  ]);
+}
 
 const screenEl = document.getElementById("screen");
 const messageEl = document.getElementById("message");
@@ -71,7 +88,8 @@ async function showResult(ms) {
 async function refreshRanking() {
   rankingListEl.innerHTML = "<li>불러오는 중...</li>";
   try {
-    const top = await getTop(TOP_N);
+    const { getTop } = await loadFirebase();
+    const top = await withTimeout(getTop(TOP_N), FIREBASE_TIMEOUT_MS);
     rankingListEl.innerHTML = "";
     if (top.length === 0) {
       rankingListEl.innerHTML = "<li>기록이 아직 없습니다</li>";
@@ -111,7 +129,8 @@ saveFormEl.addEventListener("submit", async (e) => {
 
   saveStatusEl.textContent = "저장 중...";
   try {
-    await saveScore(saveResultMs, nickname);
+    const { saveScore } = await loadFirebase();
+    await withTimeout(saveScore(saveResultMs, nickname), FIREBASE_TIMEOUT_MS);
     saveStatusEl.textContent = "저장되었습니다!";
     saveFormEl.classList.add("hidden");
     await refreshRanking();
