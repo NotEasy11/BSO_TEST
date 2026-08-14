@@ -30,12 +30,12 @@
 3. Firestore 콘솔의 **규칙(Rules)** 탭에 이 저장소의 `firestore.rules` 내용을 그대로 붙여넣고 게시합니다.
 4. Firebase 콘솔 좌측 상단 **프로젝트 설정(⚙) > 일반** 탭으로 이동해 "내 앱" 섹션에서 웹 앱(</>)을 추가합니다.
 5. 발급되는 `firebaseConfig` 객체 값을 저장소 **Settings > Secrets and variables > Actions > New repository secret**에 아래 이름 그대로 하나씩 등록합니다.
-   - `FIREBASE_API_KEY`
-   - `FIREBASE_AUTH_DOMAIN`
-   - `FIREBASE_PROJECT_ID`
-   - `FIREBASE_STORAGE_BUCKET`
-   - `FIREBASE_MESSAGING_SENDER_ID`
-   - `FIREBASE_APP_ID`
+   - `VITE_FIREBASE_API_KEY`
+   - `VITE_FIREBASE_AUTH_DOMAIN`
+   - `VITE_FIREBASE_PROJECT_ID`
+   - `VITE_FIREBASE_STORAGE_BUCKET`
+   - `VITE_FIREBASE_MESSAGING_SENDER_ID`
+   - `VITE_FIREBASE_APP_ID`
 6. 배포 워크플로우(`.github/workflows/deploy-pages.yml`)가 배포 시점에 이 Secrets 값으로 `firebase-config.js`를 새로 생성해 반영합니다. 저장소에 커밋되어 있는 `firebase-config.js`는 로컬 테스트용 예시일 뿐이며, 실제 배포본에는 사용되지 않습니다.
    - Secrets 중 하나라도 비어 있으면 배포 워크플로우가 실패하도록 되어 있으니, Actions 탭에서 실패 메시지로 어떤 값이 누락됐는지 확인할 수 있습니다.
    - 참고: 이 값들은 클라이언트에 공개되는 값이라 원래는 커밋해도 안전하지만(비밀키 아님), 이번에는 Secrets로 관리하기로 했습니다.
