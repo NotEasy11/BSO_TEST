@@ -17,7 +17,7 @@
 - `index.html`, `style.css` — 화면 구조와 스타일
 - `app.js` — 게임 상태 머신(반응속도 측정 로직)
 - `firebase.js` — `saveScore(ms, nickname)`, `getTop(n)` 두 함수로 분리된 Firestore 연동
-- `firebase-config.js` — Firebase 프로젝트 설정 값 (아래 안내에 따라 직접 채워야 함)
+- `firebase-config.js` — Firebase 프로젝트 설정 값 (로컬 테스트용 예시 파일. 실제 배포본은 GitHub Actions Secrets로부터 배포 시점에 생성됨)
 - `firestore.rules` — Firestore 보안 규칙
 - `.github/workflows/deploy-pages.yml` — GitHub Pages 자동 배포 워크플로우
 
@@ -29,10 +29,16 @@
 2. 프로젝트 안에서 **Firestore Database**를 생성합니다 (모드는 아무거나 선택해도 되며, 아래 3번 규칙으로 덮어씁니다).
 3. Firestore 콘솔의 **규칙(Rules)** 탭에 이 저장소의 `firestore.rules` 내용을 그대로 붙여넣고 게시합니다.
 4. Firebase 콘솔 좌측 상단 **프로젝트 설정(⚙) > 일반** 탭으로 이동해 "내 앱" 섹션에서 웹 앱(</>)을 추가합니다.
-5. 발급되는 `firebaseConfig` 객체 값을 이 저장소의 `firebase-config.js` 파일에 그대로 붙여넣습니다.
-   - `apiKey`, `authDomain`, `projectId`, `storageBucket`, `messagingSenderId`, `appId` 전부 채워야 합니다.
-   - 이 값들은 비밀키가 아니라 클라이언트에 공개되는 값이라 커밋해도 안전하며, 실제 접근 제어는 3번의 Firestore 규칙이 담당합니다.
-6. `firebase-config.js` 수정 후 커밋/푸시하면 GitHub Pages에 반영됩니다.
+5. 발급되는 `firebaseConfig` 객체 값을 저장소 **Settings > Secrets and variables > Actions > New repository secret**에 아래 이름 그대로 하나씩 등록합니다.
+   - `FIREBASE_API_KEY`
+   - `FIREBASE_AUTH_DOMAIN`
+   - `FIREBASE_PROJECT_ID`
+   - `FIREBASE_STORAGE_BUCKET`
+   - `FIREBASE_MESSAGING_SENDER_ID`
+   - `FIREBASE_APP_ID`
+6. 배포 워크플로우(`.github/workflows/deploy-pages.yml`)가 배포 시점에 이 Secrets 값으로 `firebase-config.js`를 새로 생성해 반영합니다. 저장소에 커밋되어 있는 `firebase-config.js`는 로컬 테스트용 예시일 뿐이며, 실제 배포본에는 사용되지 않습니다.
+   - Secrets 중 하나라도 비어 있으면 배포 워크플로우가 실패하도록 되어 있으니, Actions 탭에서 실패 메시지로 어떤 값이 누락됐는지 확인할 수 있습니다.
+   - 참고: 이 값들은 클라이언트에 공개되는 값이라 원래는 커밋해도 안전하지만(비밀키 아님), 이번에는 Secrets로 관리하기로 했습니다.
 
 ## GitHub Pages 배포
 
@@ -48,4 +54,4 @@
 python3 -m http.server 8080
 ```
 
-이후 브라우저에서 `http://localhost:8080` 접속. (단, `firebase-config.js`에 실제 값을 채워야 저장/랭킹 기능이 동작합니다.)
+이후 브라우저에서 `http://localhost:8080` 접속. 저장/랭킹 기능까지 로컬에서 확인하려면 `firebase-config.js`를 로컬에서만 실제 값으로 임시 수정하세요 (커밋하지 않아도 됩니다 — 배포본은 Secrets로 별도 생성됩니다).
