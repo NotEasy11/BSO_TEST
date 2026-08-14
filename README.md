@@ -37,7 +37,7 @@
 ## GitHub Pages 배포
 
 1. 저장소 **Settings > Pages**에서 Source를 **GitHub Actions**로 설정합니다.
-2. `main` 브랜치에 푸시(또는 이 브랜치를 `main`에 병합)하면 `.github/workflows/deploy-pages.yml` 워크플로우가 자동으로 정적 파일을 배포합니다.
+2. 현재는 `main`과 `claude/reaction-time-webapp-1pdu4h` 두 브랜치에 push될 때 `.github/workflows/deploy-pages.yml`이 자동으로 정적 파일을 배포하도록 되어 있습니다 (지금은 `main`이 아직 없어 후자 브랜치가 사실상 기본 브랜치입니다). 나중에 `main`으로 브랜치를 정리하면 워크플로우의 `branches` 목록도 그에 맞게 정리해주세요.
 3. 배포 후 URL은 Settings > Pages 또는 워크플로우 실행 결과에서 확인할 수 있습니다.
 
 ## 로컬 확인

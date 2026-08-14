@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [main]
+    branches: [main, claude/reaction-time-webapp-1pdu4h]
   workflow_dispatch:
 
 permissions:
